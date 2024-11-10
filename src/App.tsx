@@ -1,58 +1,61 @@
-import { useState, useCallback } from 'react'
-import {
-  ReactFlow,
-  Node,
-  Edge,
-  Connection,
-  addEdge,
-  Background,
-  Controls,
-  MiniMap,
-  applyNodeChanges,
-  applyEdgeChanges,
-} from '@xyflow/react'
-import '@xyflow/react/dist/style.css'
+import { ReactFlow, Background, Controls, BackgroundVariant } from "@xyflow/react";
+import "@xyflow/react/dist/style.css";
+import { useGraph } from "./hooks/useGraphContext";
+import CustomNode from "./components/CustomNode";
 
-const initialNodes: Node[] = [
-  { id: '1', position: { x: 0, y: 0 }, data: { label: 'Node 1' } },
-  { id: '2', position: { x: 0, y: 100 }, data: { label: 'Node 2' } },
-  { id: '3', position: { x: 200, y: 50 }, data: { label: 'Node 3' } },
-]
-
-const initialEdges: Edge[] = [
-  { id: 'e1-2', source: '1', target: '2' },
-  { id: 'e1-3', source: '1', target: '3' },
-]
+const nodeType = { customNode: CustomNode };
 
 export default function App() {
-  const [nodes, setNodes] = useState<Node[]>(initialNodes)
-  const [edges, setEdges] = useState<Edge[]>(initialEdges)
+  const {
+    nodes,
+    edges,
+    onNodesChange,
+    onEdgesChange,
+    onConnect,
+    addNode,
+    deleteNode,
+    selectedNode,
+    setSelectedNode,
+  } = useGraph();
 
-  const onNodesChange = useCallback(
-    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
-    [],
-  );
-  const onEdgesChange = useCallback(
-    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-    [],
-  );
-
-  const onConnect = useCallback((params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)), [])
+  console.log(selectedNode);
 
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onConnect={onConnect}
-        onEdgesChange={onEdgesChange}
-        fitView
+    <div className="relative">
+      <h1 className="absolute font-black text-5xl headline-color p-4">
+        Algo-Visualizer
+      </h1>
+      <div className="w-screen h-screen">
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          nodeTypes={nodeType}
+          onNodesChange={onNodesChange}
+          onConnect={onConnect}
+          onEdgesChange={onEdgesChange}
+          onNodeClick={(_, node) => setSelectedNode(node)}
+          onNodeDragStart={(_, node, _nodes) => setSelectedNode(node)}
+          onNodeDragStop={(_, node, _nodes) => setSelectedNode(node)}
+          fitView
+        >
+          <Controls />
+          <Background gap={12} size={1} color="#f1f1f1" variant={BackgroundVariant.Dots}/>
+        </ReactFlow>
+      </div>
+
+      <button
+        className="absolute top-4 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={addNode}
       >
-        <Controls />
-        <MiniMap />
-        <Background gap={12} size={1} />
-      </ReactFlow>
+        + Add Node
+      </button>
+
+      <button
+        className="absolute top-16 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={deleteNode}
+      >
+        - Delete Node
+      </button>
     </div>
-  )
+  );
 }
