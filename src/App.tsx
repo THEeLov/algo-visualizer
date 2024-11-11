@@ -1,7 +1,13 @@
-import { ReactFlow, Background, Controls, BackgroundVariant } from "@xyflow/react";
+import {
+  ReactFlow,
+  Background,
+  Controls,
+  BackgroundVariant,
+} from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { useGraph } from "./hooks/useGraphContext";
 import CustomNode from "./components/CustomNode";
+import { FaMinus, FaPlus, FaQuestion } from "react-icons/fa";
 
 const nodeType = { customNode: CustomNode };
 
@@ -39,22 +45,31 @@ export default function App() {
           fitView
         >
           <Controls />
-          <Background gap={12} size={1} color="#f1f1f1" variant={BackgroundVariant.Dots}/>
+          <Background
+            gap={12}
+            size={1}
+            color="#f1f1f1"
+            variant={BackgroundVariant.Dots}
+          />
         </ReactFlow>
       </div>
 
       <button
-        className="absolute top-4 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="absolute top-4 right-4 text-white font-bold p-2 rounded button"
         onClick={addNode}
       >
-        + Add Node
+        <FaPlus size={32} />
       </button>
 
       <button
-        className="absolute top-16 right-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="absolute top-20 right-4 button text-white font-bold p-2 rounded"
         onClick={deleteNode}
       >
-        - Delete Node
+        <FaMinus size={32} />
+      </button>
+
+      <button className="absolute bottom-4 right-4 p-2 button rounded text-white">
+        <FaQuestion size={32}/>
       </button>
     </div>
   );

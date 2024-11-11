@@ -1,4 +1,4 @@
-import { Handle, Position, Node } from "@xyflow/react";
+import { Handle, Position } from "@xyflow/react";
 import { useGraph } from "../hooks/useGraphContext";
 
 function CustomNode({ ...props }) {
@@ -8,11 +8,11 @@ function CustomNode({ ...props }) {
     <>
       <Handle type="target" position={Position.Top} style={{}} />
       <div
-        className={`p-4 ${
-          props.id === selectedNode?.id ? "bg-blue-500" : "bg-red-300"
+        className={`pt-2 pb-2 pl-4 pr-4 rounded-lg ${
+          props.id === selectedNode?.id ? "nodeSelected motion-preset-confetti -z-10" : ""
         } border-2`}
       >
-        {`Hello`}
+        {`${props.data.label}`}
       </div>
       <Handle type="source" position={Position.Bottom} id="a" />
     </>

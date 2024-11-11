@@ -67,8 +67,9 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
         deleteNode();
       }
     };
-
+    
     window.addEventListener("keydown", handleKeyPress);
+    
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
