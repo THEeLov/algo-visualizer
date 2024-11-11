@@ -1,4 +1,11 @@
-import { addEdge, applyEdgeChanges, applyNodeChanges, Node, Edge, Connection } from "@xyflow/react";
+import {
+  addEdge,
+  applyEdgeChanges,
+  applyNodeChanges,
+  Node,
+  Edge,
+  Connection,
+} from "@xyflow/react";
 import React, { createContext, useState, useCallback, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -10,14 +17,18 @@ interface GraphContextProps {
   edges: Edge[];
   selectedNode: Node | null;
   addNode: () => void;
-  deleteNode: () => void;
+  deleteNodeOrEdge: () => void;
+  onNodeSelect: (node: Node) => void;
+  onEdgeSelect: (edge: Edge) => void;
   setSelectedNode: (node: Node | null) => void;
   onNodesChange: (changes: any) => void;
   onEdgesChange: (changes: any) => void;
   onConnect: (params: Edge | Connection) => void;
 }
 
-export const GraphContext = createContext<GraphContextProps | undefined>(undefined);
+export const GraphContext = createContext<GraphContextProps | undefined>(
+  undefined
+);
 
 export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -25,6 +36,9 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
+  const [selectedEdge, setSelectedEdge] = useState<Edge | null>(null);
+  
+  console.log(selectedEdge);
 
   const onNodesChange = useCallback(
     (changes: any) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -50,30 +64,47 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
     setNodes((nds) => [...nds, newNode]);
   };
 
-  const deleteNode = () => {
-    if (selectedNode === null) return;
-    setNodes((nds) => nds.filter((node) => node.id !== selectedNode.id));
-    setEdges((eds) =>
-      eds.filter(
-        (edge) => edge.source !== selectedNode.id && edge.target !== selectedNode.id
-      )
-    );
+  const deleteNodeOrEdge = () => {
+    if (selectedNode !== null) {
+      setNodes((nds) => nds.filter((node) => node.id !== selectedNode.id));
+      setEdges((eds) =>
+        eds.filter(
+          (edge) =>
+            edge.source !== selectedNode.id && edge.target !== selectedNode.id
+        )
+      );
+      setSelectedNode(null);
+    } else if (selectedEdge !== null) {
+      console.log(selectedEdge);
+      console.log(edges);
+      setEdges((eds) => eds.filter((edge) => !(edge.target === selectedEdge.target && edge.source === selectedEdge.source)));
+      setSelectedEdge(null);
+    }
+  };
+
+  const onEdgeSelect = (edge: Edge) => {
+    setSelectedEdge(edge);
     setSelectedNode(null);
   };
+
+  const onNodeSelect = (node: Node) => {
+    setSelectedNode(node);
+    setSelectedEdge(null);
+  }
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if (event.key === "Delete") {
-        deleteNode();
+        deleteNodeOrEdge();
       }
     };
-    
+
     window.addEventListener("keydown", handleKeyPress);
-    
+
     return () => {
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [deleteNode]);
+  }, [deleteNodeOrEdge]);
 
   return (
     <GraphContext.Provider
@@ -82,7 +113,9 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
         edges,
         selectedNode,
         addNode,
-        deleteNode,
+        deleteNodeOrEdge,
+        onNodeSelect,
+        onEdgeSelect,
         setSelectedNode,
         onNodesChange,
         onEdgesChange,

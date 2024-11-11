@@ -19,7 +19,9 @@ export default function App() {
     onEdgesChange,
     onConnect,
     addNode,
-    deleteNode,
+    deleteNodeOrEdge,
+    onNodeSelect,
+    onEdgeSelect,
     selectedNode,
     setSelectedNode,
   } = useGraph();
@@ -39,9 +41,10 @@ export default function App() {
           onNodesChange={onNodesChange}
           onConnect={onConnect}
           onEdgesChange={onEdgesChange}
-          onNodeClick={(_, node) => setSelectedNode(node)}
+          onNodeClick={(_, node) => onNodeSelect(node)}
           onNodeDragStart={(_, node, _nodes) => setSelectedNode(node)}
           onNodeDragStop={(_, node, _nodes) => setSelectedNode(node)}
+          onEdgeClick={(_, edge) => onEdgeSelect(edge)}
           fitView
         >
           <Controls />
@@ -63,7 +66,7 @@ export default function App() {
 
       <button
         className="absolute top-20 right-4 button text-white font-bold p-2 rounded"
-        onClick={deleteNode}
+        onClick={deleteNodeOrEdge}
       >
         <FaMinus size={32} />
       </button>
