@@ -25,7 +25,6 @@ export default function App() {
     onNodeSelect,
     onEdgeSelect,
     selectedNode,
-    setSelectedNode,
   } = useGraph();
 
   console.log(selectedNode);

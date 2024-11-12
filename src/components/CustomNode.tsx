@@ -8,7 +8,7 @@ function CustomNode({ ...props }) {
     <>
       <Handle type="target" position={Position.Top} style={{}} />
       <div
-        className={`pt-2 pb-2 pl-4 pr-4 rounded-lg ${
+        className={`pt-2 pb-2 pl-4 pr-4 rounded-full ${
           props.id === selectedNode?.id ? "nodeSelected motion-preset-confetti -z-10" : ""
         } border-2`}
       >
