@@ -8,8 +8,10 @@ import "@xyflow/react/dist/style.css";
 import { useGraph } from "./hooks/useGraphContext";
 import CustomNode from "./components/CustomNode";
 import { FaMinus, FaPlus, FaQuestion } from "react-icons/fa";
+import CustomEdge from "./components/CustomEdge";
 
 const nodeType = { customNode: CustomNode };
+const edgeType = { 'customEdge': CustomEdge}
 
 export default function App() {
   const {
@@ -38,12 +40,12 @@ export default function App() {
           nodes={nodes}
           edges={edges}
           nodeTypes={nodeType}
+          edgeTypes={edgeType}
           onNodesChange={onNodesChange}
           onConnect={onConnect}
           onEdgesChange={onEdgesChange}
           onNodeClick={(_, node) => onNodeSelect(node)}
-          onNodeDragStart={(_, node, _nodes) => setSelectedNode(node)}
-          onNodeDragStop={(_, node, _nodes) => setSelectedNode(node)}
+          onNodeDragStart={(_, node, _nodes) => onNodeSelect(node)}
           onEdgeClick={(_, edge) => onEdgeSelect(edge)}
           fitView
         >

@@ -16,6 +16,7 @@ interface GraphContextProps {
   nodes: Node[];
   edges: Edge[];
   selectedNode: Node | null;
+  selectedEdge: Edge | null;
   addNode: () => void;
   deleteNodeOrEdge: () => void;
   onNodeSelect: (node: Node) => void;
@@ -37,8 +38,6 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const [selectedEdge, setSelectedEdge] = useState<Edge | null>(null);
-  
-  console.log(selectedEdge);
 
   const onNodesChange = useCallback(
     (changes: any) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -50,8 +49,11 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 
   const onConnect = useCallback(
-    (params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)),
-    []
+    (connection:any) => {
+      const edge = { ...connection, type: 'customEdge' };
+      setEdges((eds) => addEdge(edge, eds));
+    },
+    [setEdges],
   );
 
   const addNode = () => {
@@ -112,6 +114,7 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
         nodes,
         edges,
         selectedNode,
+        selectedEdge,
         addNode,
         deleteNodeOrEdge,
         onNodeSelect,
