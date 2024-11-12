@@ -7,11 +7,11 @@ import {
 import "@xyflow/react/dist/style.css";
 import { useGraph } from "./hooks/useGraphContext";
 import CustomNode from "./components/CustomNode";
-import { FaMinus, FaPlus, FaQuestion } from "react-icons/fa";
 import CustomEdge from "./components/CustomEdge";
+import Toolbar from "./components/Toolbar";
 
 const nodeType = { customNode: CustomNode };
-const edgeType = { 'customEdge': CustomEdge}
+const edgeType = { customEdge: CustomEdge}
 
 export default function App() {
   const {
@@ -20,8 +20,6 @@ export default function App() {
     onNodesChange,
     onEdgesChange,
     onConnect,
-    addNode,
-    deleteNodeOrEdge,
     onNodeSelect,
     onEdgeSelect,
     selectedNode,
@@ -58,23 +56,7 @@ export default function App() {
         </ReactFlow>
       </div>
 
-      <button
-        className="absolute top-4 right-4 text-white font-bold p-2 rounded button"
-        onClick={addNode}
-      >
-        <FaPlus size={32} />
-      </button>
-
-      <button
-        className="absolute top-20 right-4 button text-white font-bold p-2 rounded"
-        onClick={deleteNodeOrEdge}
-      >
-        <FaMinus size={32} />
-      </button>
-
-      <button className="absolute bottom-4 right-4 p-2 button rounded text-white">
-        <FaQuestion size={32}/>
-      </button>
+      <Toolbar />
     </div>
   );
 }
