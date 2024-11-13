@@ -9,11 +9,16 @@ import { useGraph } from "./hooks/useGraphContext";
 import CustomNode from "./components/CustomNode";
 import CustomEdge from "./components/CustomEdge";
 import Toolbar from "./components/Toolbar";
+import { useDialogs } from "./hooks/useDialogsContext";
+import EditNodeDialog from "./dialogs/EditNodeDialog";
 
 const nodeType = { customNode: CustomNode };
 const edgeType = { customEdge: CustomEdge}
 
 export default function App() {
+
+  const {isEditDialogOpen} = useDialogs();
+
   const {
     nodes,
     edges,
@@ -57,6 +62,8 @@ export default function App() {
       </div>
 
       <Toolbar />
+
+      {isEditDialogOpen && <EditNodeDialog />}
     </div>
   );
 }

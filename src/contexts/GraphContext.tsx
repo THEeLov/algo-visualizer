@@ -8,6 +8,7 @@ import {
 } from "@xyflow/react";
 import React, { createContext, useState, useCallback, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { EditNodeType } from "../types";
 
 const initialNodes: Node[] = [];
 const initialEdges: Edge[] = [];
@@ -18,6 +19,7 @@ interface GraphContextProps {
   selectedNode: Node | null;
   selectedEdge: Edge | null;
   addNode: () => void;
+  editNode: (data: EditNodeType) => void;
   deleteNodeOrEdge: () => void;
   onNodeSelect: (node: Node) => void;
   onEdgeSelect: (edge: Edge) => void;
@@ -60,11 +62,19 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
     const newNode: Node = {
       id: uuidv4(),
       position: { x: 0, y: 0 },
-      data: { label: "Node", isVisited: nodes.length === 0 ? false : true },
+      data: { label: 9, isVisited: nodes.length === 0 ? false : true },
       type: "customNode",
     };
     setNodes((nds) => [...nds, newNode]);
   };
+
+  const editNode = (data: EditNodeType) => {
+    if (selectedNode === null) {
+      null;
+    }    
+
+    
+  }
 
   const deleteNodeOrEdge = () => {
     if (selectedNode !== null) {
@@ -116,6 +126,7 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
         selectedNode,
         selectedEdge,
         addNode,
+        editNode,
         deleteNodeOrEdge,
         onNodeSelect,
         onEdgeSelect,

@@ -1,9 +1,11 @@
 import { FaEdit, FaMinus, FaPlus, FaQuestion } from "react-icons/fa";
 import { useGraph } from "../hooks/useGraphContext";
+import { useDialogs } from "../hooks/useDialogsContext";
 
 const Toolbar = () => {
+  const { setIsAddDialogOpen, setIsEditDialogOpen } = useDialogs();
 
-  const {addNode, deleteNodeOrEdge} = useGraph();
+  const { addNode, deleteNodeOrEdge } = useGraph();
 
   return (
     <>
@@ -21,12 +23,13 @@ const Toolbar = () => {
         <FaMinus size={32} />
       </button>
 
-      <button className="absolute bottom-4 right-4 p-2 button rounded text-white">
-        <FaQuestion size={32} />
+      <button className="absolute top-36 right-4 p-2 button rounded text-white" onClick={() => setIsEditDialogOpen(true)}>
+        <FaEdit size={32} />
       </button>
 
-      <button className="absolute top-36 right-4 p-2 button rounded text-white">
-        <FaEdit size={32} />
+      {/* TODO: Do some manual that explain functionality */}
+      <button className="absolute bottom-4 right-4 p-2 button rounded text-white">
+        <FaQuestion size={32} />
       </button>
     </>
   );
