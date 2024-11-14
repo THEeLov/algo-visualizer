@@ -11,13 +11,14 @@ import CustomEdge from "./components/CustomEdge";
 import Toolbar from "./components/Toolbar";
 import { useDialogs } from "./hooks/useDialogsContext";
 import EditNodeDialog from "./dialogs/EditNodeDialog";
+import AddNodeDialog from "./dialogs/AddNodeDialog";
+import { ToastContainer } from 'react-toastify';
 
 const nodeType = { customNode: CustomNode };
-const edgeType = { customEdge: CustomEdge}
+const edgeType = { customEdge: CustomEdge };
 
 export default function App() {
-
-  const {isEditDialogOpen} = useDialogs();
+  const { isEditDialogOpen, isAddDialogOpen } = useDialogs();
 
   const {
     nodes,
@@ -64,6 +65,9 @@ export default function App() {
       <Toolbar />
 
       {isEditDialogOpen && <EditNodeDialog />}
+      {isAddDialogOpen && <AddNodeDialog />}
+
+      <ToastContainer />
     </div>
   );
 }

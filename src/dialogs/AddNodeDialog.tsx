@@ -11,45 +11,44 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useGraph } from "../hooks/useGraphContext";
-import { EditNodeSchema, EditNodeType } from "@/types";
+import { AddNodeSchema, AddNodeType } from "@/types";
 import { useDialogs } from "@/hooks/useDialogsContext";
 
-export const EditNodeDialog = () => {
-  const { isEditDialogOpen, setIsEditDialogOpen } = useDialogs();
-  const { editNode } = useGraph();
+export const AddNodeDialog = () => {
+  const { isAddDialogOpen, setIsAddDialogOpen } = useDialogs();
+  const { addNode } = useGraph();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<EditNodeType>({
-    resolver: zodResolver(EditNodeSchema),
+  } = useForm<AddNodeType>({
+    resolver: zodResolver(AddNodeSchema),
   });
 
-  const onSubmit = (data: EditNodeType) => {
-    editNode(data);
-    setIsEditDialogOpen(false);
+  const onSubmit = (data: AddNodeType) => {
+    addNode(data);
+    setIsAddDialogOpen(false);
   };
 
   return (
-    <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+    <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit Node</DialogTitle>
+          <DialogTitle>Create Node</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <Label htmlFor="value" className="">
           </Label>
           <Input
             id="value"
-            className="col-span-3"
             type="number"
-            {...register("value", { valueAsNumber: true })}
+            {...register("value")}
             placeholder="Enter value..."
             autoComplete="off"
           />
           {errors.value && (
-            <p className="text-sm text-red-500">{errors.value.message}</p>
+            <p className="text-sm text-red-500">Value is required</p>
           )}
           <DialogFooter>
             <Button type="submit" onSubmit={() => handleSubmit(onSubmit)}>Submit</Button>
@@ -60,4 +59,4 @@ export const EditNodeDialog = () => {
   );
 }
 
-export default EditNodeDialog;
+export default AddNodeDialog;
