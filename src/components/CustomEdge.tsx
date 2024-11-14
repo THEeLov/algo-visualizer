@@ -4,7 +4,7 @@ import {
 } from "@xyflow/react";
 import { useGraph } from "../hooks/useGraphContext";
 
-export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY }: any) {
+export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY, markerEnd }: any) {
 
   const { selectedEdge } = useGraph();
 
@@ -22,7 +22,7 @@ export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY }: a
 
   return (
     <>
-      <BaseEdge id={id} path={edgePath} style={customStyle}/>
+      <BaseEdge id={id} path={edgePath} style={customStyle} markerEnd={markerEnd}/>
     </>
   );
 }

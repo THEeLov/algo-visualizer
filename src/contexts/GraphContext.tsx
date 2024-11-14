@@ -5,8 +5,15 @@ import {
   Node,
   Edge,
   Connection,
+  MarkerType,
 } from "@xyflow/react";
-import React, { createContext, useState, useCallback, useEffect } from "react";
+import React, {
+  createContext,
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
 import { v4 as uuidv4 } from "uuid";
 import { AddNodeType, EditNodeType } from "../types";
 
@@ -52,7 +59,12 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const onConnect = useCallback(
     (connection: any) => {
-      const edge = { ...connection, type: "customEdge" };
+      const edge = {
+        ...connection,
+        type: "customEdge",
+        id: uuidv4(),
+        markerEnd: { type: MarkerType.ArrowClosed, width: 20, height: 20, color:"#00dbde" },
+      };
       setEdges((eds) => addEdge(edge, eds));
     },
     [setEdges]
@@ -101,8 +113,6 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
       );
       setSelectedNode(null);
     } else if (selectedEdge !== null) {
-      console.log(selectedEdge);
-      console.log(edges);
       setEdges((eds) =>
         eds.filter(
           (edge) =>

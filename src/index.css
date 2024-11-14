@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.react-flow__attribution {
+  display: none;
+}
+
 .headline-color {
   background: #fc00ff;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #00dbde, #fc00ff);  /* Chrome 10-25, Safari 5.1-6 */

@@ -65,7 +65,7 @@ export default function App() {
       <Toolbar />
 
       {isEditDialogOpen && <EditNodeDialog />}
-      {isAddDialogOpen && <AddNodeDialog />}
+      {isAddDialogOpen && <AddNodeDialog />}  
 
       <ToastContainer />
     </div>
