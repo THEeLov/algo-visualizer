@@ -7,13 +7,7 @@ import {
   Connection,
   MarkerType,
 } from "@xyflow/react";
-import React, {
-  createContext,
-  useState,
-  useCallback,
-  useEffect,
-  useRef,
-} from "react";
+import React, { createContext, useState, useCallback, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { AddNodeType, EditNodeType } from "../types";
 
@@ -63,7 +57,12 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
         ...connection,
         type: "customEdge",
         id: uuidv4(),
-        markerEnd: { type: MarkerType.ArrowClosed, width: 20, height: 20, color:"#00dbde" },
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          width: 20,
+          height: 20,
+          color: "#00dbde",
+        },
       };
       setEdges((eds) => addEdge(edge, eds));
     },
@@ -71,14 +70,18 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 
   const addNode = (data: AddNodeType) => {
-    const newNode: Node = {
+    const newNodes = data.value.map((value) => ({
       id: uuidv4(),
       position: { x: 0, y: 0 },
-      data: { label: data.value, isVisited: nodes.length === 0 ? false : true },
+      data: {
+        label: value,
+        isVisited: nodes.length === 0 ? false : true,
+      },
       type: "customNode",
-      value: data.value,
-    };
-    setNodes((nds) => [...nds, newNode]);
+      value: value,
+    }));
+
+    setNodes((nds) => [...nds, ...newNodes]);
   };
 
   const editNode = (data: EditNodeType) => {

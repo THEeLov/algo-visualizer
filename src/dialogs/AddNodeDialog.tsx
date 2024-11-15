@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { useGraph } from "../hooks/useGraphContext";
 import { AddNodeSchema, AddNodeType } from "@/types";
 import { useDialogs } from "@/hooks/useDialogsContext";
+import { Circle } from "lucide-react";
 
 export const AddNodeDialog = () => {
   const { isAddDialogOpen, setIsAddDialogOpen } = useDialogs();
@@ -37,26 +38,32 @@ export const AddNodeDialog = () => {
         <DialogHeader>
           <DialogTitle>Create Node</DialogTitle>
         </DialogHeader>
+        <ul className="list-disc">
+          <p className="font-bold">Example</p>
+          <li className="ml-4">52</li>
+          <li className="ml-4">52, 32, 87, 8, 0</li>
+        </ul>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <Label htmlFor="value" className="">
-          </Label>
+          <Label htmlFor="value" className=""></Label>
           <Input
             id="value"
-            type="number"
+            type="text"
             {...register("value")}
-            placeholder="Enter value..."
+            placeholder="Enter values..."
             autoComplete="off"
           />
           {errors.value && (
             <p className="text-sm text-red-500">Value is required</p>
           )}
           <DialogFooter>
-            <Button type="submit" onSubmit={() => handleSubmit(onSubmit)}>Submit</Button>
+            <Button type="submit" onSubmit={() => handleSubmit(onSubmit)}>
+              Submit
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
   );
-}
+};
 
 export default AddNodeDialog;
