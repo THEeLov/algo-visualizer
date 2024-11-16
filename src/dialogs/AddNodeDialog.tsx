@@ -13,7 +13,6 @@ import { Label } from "@/components/ui/label";
 import { useGraph } from "../hooks/useGraphContext";
 import { AddNodeSchema, AddNodeType } from "@/types";
 import { useDialogs } from "@/hooks/useDialogsContext";
-import { Circle } from "lucide-react";
 
 export const AddNodeDialog = () => {
   const { isAddDialogOpen, setIsAddDialogOpen } = useDialogs();

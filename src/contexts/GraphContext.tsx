@@ -53,6 +53,16 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const onConnect = useCallback(
     (connection: any) => {
+      const sourceNodeId = connection.source;
+      const sourceNode: Node | undefined = nodes.find((node) => node.id === sourceNodeId);
+      console.log("hello")
+      console.log(sourceNode);
+
+      if (!sourceNode || sourceNode.connectionCount >= 2) {
+        // Prevent connection if the source node has already 2 connections
+        return;
+      }
+
       const edge = {
         ...connection,
         type: "customEdge",
@@ -64,9 +74,26 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
           color: "#00dbde",
         },
       };
+
       setEdges((eds) => addEdge(edge, eds));
+
+      // Update the connection count for the source node
+      setNodes((nds) =>
+        nds.map((node) => {
+          if (node.id === sourceNodeId) {
+            return {
+              ...node,
+              data: {
+                ...node.data,
+              },
+              connectionCount: node.connectionCount + 1,
+            };
+          }
+          return node;
+        })
+      );
     },
-    [setEdges]
+    [setEdges, nodes, setNodes]
   );
 
   const addNode = (data: AddNodeType) => {
@@ -75,10 +102,10 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
       position: { x: 0, y: 0 },
       data: {
         label: value,
-        isVisited: nodes.length === 0 ? false : true,
       },
       type: "customNode",
       value: value,
+      connectionCount: 0
     }));
 
     setNodes((nds) => [...nds, ...newNodes]);
@@ -116,6 +143,22 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
       );
       setSelectedNode(null);
     } else if (selectedEdge !== null) {
+
+      setNodes((nds) =>
+        nds.map((node) => {
+          if (node.id === selectedEdge.source) {
+            return {
+              ...node,
+              data: {
+                ...node.data,
+              },
+              connectionCount: node.connectionCount - 1,
+            };
+          }
+          return node;
+        })
+      );
+
       setEdges((eds) =>
         eds.filter(
           (edge) =>
