@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { Node } from "@xyflow/react"
 
 // User can input more values like 52, 23, 65 and all values will be added to canvas
 export const AddNodeSchema = z.object({
@@ -27,3 +28,8 @@ export const EditNodeSchema = z.object({
 })
 
 export type EditNodeType = z.infer<typeof EditNodeSchema>
+
+export type NodeChildren = {
+  left: Node | null;
+  right: Node | null;
+}

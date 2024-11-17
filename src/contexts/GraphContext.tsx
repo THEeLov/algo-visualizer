@@ -10,6 +10,7 @@ import {
 import React, { createContext, useState, useCallback, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { AddNodeType, EditNodeType } from "../types";
+import { createBinaryTree } from "@/utils/treeUtils";
 
 const initialNodes: Node[] = [];
 const initialEdges: Edge[] = [];
@@ -25,6 +26,7 @@ interface GraphContextProps {
   onNodeSelect: (node: Node) => void;
   onEdgeSelect: (edge: Edge) => void;
   setSelectedNode: (node: Node | null) => void;
+  createTree: () => void;
   onNodesChange: (changes: any) => void;
   onEdgesChange: (changes: any) => void;
   onConnect: (params: Edge | Connection) => void;
@@ -77,7 +79,6 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
 
       setEdges((eds) => addEdge(edge, eds));
 
-      // Update the connection count for the source node
       setNodes((nds) =>
         nds.map((node) => {
           if (node.id === sourceNodeId) {
@@ -172,6 +173,12 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const createTree = () => {
+    const tree = createBinaryTree(nodes, edges, selectedNode!);
+
+    console.log(tree);
+  }
+
   const onEdgeSelect = (edge: Edge) => {
     setSelectedEdge(edge);
     setSelectedNode(null);
@@ -209,6 +216,7 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
         onNodeSelect,
         onEdgeSelect,
         setSelectedNode,
+        createTree,
         onNodesChange,
         onEdgesChange,
         onConnect,

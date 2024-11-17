@@ -56,7 +56,7 @@ export default function App() {
           <Background
             gap={12}
             size={1}
-            color="#f1f1f1"
+            color="#C8C8C8"
             variant={BackgroundVariant.Dots}
           />
         </ReactFlow>
