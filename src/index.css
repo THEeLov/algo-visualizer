@@ -21,6 +21,20 @@
   box-shadow: 0px 0px 6px #00dbde;
 }
 
+.correctNode {
+  background: #90EE90;
+  color: white;
+  border: 0px;
+  box-shadow: 0px 0px 6px #90EE90;
+}
+
+.incorrectNode {
+  background: #F08080;
+  color: white;
+  border: 0px;
+  box-shadow: 0px 0px 6px #F08080;
+}
+
 .button {
   background: #fc00ff;
   box-shadow: 0px 0px 6px #fc00ff;

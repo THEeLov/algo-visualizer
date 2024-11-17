@@ -33,3 +33,5 @@ export type NodeChildren = {
   left: Node | null;
   right: Node | null;
 }
+
+export type CorrectionType = "correct" | "incorrect";

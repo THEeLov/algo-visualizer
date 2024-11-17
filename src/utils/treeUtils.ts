@@ -1,5 +1,5 @@
 import { Node, Edge } from "@xyflow/react";
-import { NodeChildren } from "@/types";
+import { CorrectionType, NodeChildren } from "@/types";
 
 class BinaryTreeNode {
   node: Node;
@@ -72,19 +72,54 @@ const findChildren = (
   return { left, right };
 };
 
-export const validateBinaryTree = (head: BinaryTreeNode) => {
-  const validationMap = new Map<string, Node[]>([
-    ["valid", []],
-    ["invalid", []],
+export const validateBinaryTree = (
+  head: BinaryTreeNode
+): Map<string, CorrectionType> => {
+  const validationMap = new Map<string, CorrectionType>([
+    [head.node.id, "correct"],
   ]);
 
-  validationMap.get("valid")?.push(head.node);
-
-  const queue: BinaryTreeNode[] = [head];
+  const queue: { node: BinaryTreeNode; min: number; max: number }[] = [
+    { node: head, min: -Infinity, max: Infinity },
+  ];
 
   while (queue.length > 0) {
+    const { node: parent, min, max } = queue.pop()!;
 
-    const node = queue.pop
+    if (parent.left) {
+      const leftMin = min;
+      const leftMax = parent.node.value;
+      const correction: CorrectionType =
+        parent.left.node.value >= leftMin && parent.left.node.value < leftMax
+          ? "correct"
+          : "incorrect";
+      validationMap.set(parent.left.node.id, correction);
+      if (correction === "correct") {
+        queue.push({
+          node: parent.left,
+          min: leftMin,
+          max: leftMax,
+        });
+      }
+    }
+
+    if (parent.right) {
+      const rightMin = parent.node.value;
+      const rightMax = max;
+      const correction: CorrectionType =
+        parent.right.node.value >= rightMin &&
+        parent.right.node.value < rightMax
+          ? "correct"
+          : "incorrect";
+      validationMap.set(parent.right.node.id, correction);
+      if (correction === "correct") {
+        queue.push({
+          node: parent.right,
+          min: rightMin,
+          max: rightMax,
+        });
+      }
+    }
   }
 
   return validationMap;

@@ -9,8 +9,8 @@ import {
 } from "@xyflow/react";
 import React, { createContext, useState, useCallback, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { AddNodeType, EditNodeType } from "../types";
-import { createBinaryTree } from "@/utils/treeUtils";
+import { AddNodeType, EditNodeType, CorrectionType } from "../types";
+import { createBinaryTree, validateBinaryTree } from "@/utils/treeUtils";
 
 const initialNodes: Node[] = [];
 const initialEdges: Edge[] = [];
@@ -20,6 +20,7 @@ interface GraphContextProps {
   edges: Edge[];
   selectedNode: Node | null;
   selectedEdge: Edge | null;
+  validNodes: Map<string, CorrectionType> | null;
   addNode: (data: AddNodeType) => void;
   editNode: (data: EditNodeType) => void;
   deleteNodeOrEdge: () => void;
@@ -43,6 +44,7 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const [selectedEdge, setSelectedEdge] = useState<Edge | null>(null);
+  const [validNodes, setValidNodes] = useState<Map<string, CorrectionType> | null>(null);
 
   const onNodesChange = useCallback(
     (changes: any) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -57,8 +59,6 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
     (connection: any) => {
       const sourceNodeId = connection.source;
       const sourceNode: Node | undefined = nodes.find((node) => node.id === sourceNodeId);
-      console.log("hello")
-      console.log(sourceNode);
 
       if (!sourceNode || sourceNode.connectionCount >= 2) {
         // Prevent connection if the source node has already 2 connections
@@ -174,9 +174,11 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const createTree = () => {
+    setValidNodes(null);
     const tree = createBinaryTree(nodes, edges, selectedNode!);
+    const validation = validateBinaryTree(tree);
 
-    console.log(tree);
+    setValidNodes(validation);
   }
 
   const onEdgeSelect = (edge: Edge) => {
@@ -210,6 +212,7 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
         edges,
         selectedNode,
         selectedEdge,
+        validNodes,
         addNode,
         editNode,
         deleteNodeOrEdge,
