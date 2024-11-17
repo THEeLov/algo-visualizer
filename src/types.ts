@@ -35,3 +35,18 @@ export type NodeChildren = {
 }
 
 export type CorrectionType = "correct" | "incorrect";
+
+export type MinimalNode = {
+  id: string;
+  value: number;
+}
+
+export class BinaryTreeNode {
+  node: MinimalNode;
+  left?: BinaryTreeNode;
+  right?: BinaryTreeNode;
+
+  constructor(node: Node) {
+    this.node = node;
+  }
+}

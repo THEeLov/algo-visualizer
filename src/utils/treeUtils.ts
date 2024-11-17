@@ -1,15 +1,5 @@
 import { Node, Edge } from "@xyflow/react";
-import { CorrectionType, NodeChildren } from "@/types";
-
-class BinaryTreeNode {
-  node: Node;
-  left?: BinaryTreeNode;
-  right?: BinaryTreeNode;
-
-  constructor(node: Node) {
-    this.node = node;
-  }
-}
+import { BinaryTreeNode, CorrectionType, NodeChildren } from "@/types";
 
 export const createBinaryTree = (
   nodes: Node[],
@@ -75,6 +65,11 @@ const findChildren = (
 export const validateBinaryTree = (
   head: BinaryTreeNode
 ): Map<string, CorrectionType> => {
+
+  if (head === null) {
+    return new Map<string, CorrectionType>();
+  }
+
   const validationMap = new Map<string, CorrectionType>([
     [head.node.id, "correct"],
   ]);
