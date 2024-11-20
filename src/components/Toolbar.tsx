@@ -15,7 +15,7 @@ const Toolbar = () => {
 
   return (
     <>
-      <div className="  ">
+      <div className="">
         <button
           className="absolute top-4 right-4 text-white font-bold p-2 rounded button"
           onClick={() => setIsAddDialogOpen(true)}

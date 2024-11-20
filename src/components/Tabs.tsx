@@ -1,4 +1,5 @@
 import { useState } from "react";
+import BstTab from "./tabs/BstTab";
 
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState("BST");
@@ -24,10 +25,7 @@ const Tabs = () => {
       {/* Panels */}
       <div className="mt-4">
         {activeTab === "BST" && (
-          <div>
-            <h2 className="text-lg font-bold">Binary Search Tree (BST)</h2>
-            <p>This panel contains information about BST.</p>
-          </div>
+          <BstTab />
         )}
         {activeTab === "Heap" && (
           <div>

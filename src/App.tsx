@@ -8,7 +8,6 @@ import "@xyflow/react/dist/style.css";
 import { useGraph } from "./hooks/useGraphContext";
 import CustomNode from "./components/CustomNode";
 import CustomEdge from "./components/CustomEdge";
-import Toolbar from "./components/Toolbar";
 import { useDialogs } from "./hooks/useDialogsContext";
 import EditNodeDialog from "./dialogs/EditNodeDialog";
 import AddNodeDialog from "./dialogs/AddNodeDialog";
