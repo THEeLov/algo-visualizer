@@ -6,38 +6,46 @@
   display: none;
 }
 
+:root {
+  --primary-color: #2a363b;
+  --secondary-color: #e84a5f;
+
+  --nodeCorrect-color: #90EE90;
+  --nodeIncorrect-color: #F08080;
+}
+
 .headline-color {
-  background: #fc00ff;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #00dbde, #fc00ff);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #00dbde, #fc00ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: var(--primary-color);;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, var(--primary-color), var(--secondary-color));  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color)); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   background-clip: text;
   color: transparent;
 }
 
 .nodeSelected {
-  background: #00dbde;
+  background: var(--primary-color);
   color: white;
   border: 0px;
-  box-shadow: 0px 0px 6px #00dbde;
+  box-shadow: 0px 0px 6px var(--primary-color);
 }
 
 .correctNode {
-  background: #90EE90;
+  background: var(--nodeCorrect-color);
   color: white;
   border: 0px;
-  box-shadow: 0px 0px 6px #90EE90;
+  box-shadow: 0px 0px 6px var(--nodeCorrect-color);
 }
 
 .incorrectNode {
-  background: #F08080;
+  background: var(--nodeIncorrect-color);
   color: white;
   border: 0px;
-  box-shadow: 0px 0px 6px #F08080;
+  box-shadow: 0px 0px 6px var(--nodeIncorrect-color);
 }
 
 .button {
-  background: #fc00ff;
-  box-shadow: 0px 0px 6px #fc00ff;
+  background: var(--secondary-color);;
+  box-shadow: 0px 0px 6px var(--secondary-color);;
   transition: transform 0.1s ease-in-out; /* "1sec" should be "1s" */
 }
 
@@ -49,9 +57,23 @@
   transform: scale(0.95);
 }
 
+.sidebarButton {
+  background: var(--secondary-color);
+  box-shadow: 0px 0px 6px var(--secondary-color);
+}
+
 .dialog {
   border: 1px solid gray;
   border-radius: 10px;
+}
+
+.sidebar {
+  background-color: var(--secondary-color);
+}
+
+.activeTab {
+  border-bottom: 2px solid var(--primary-color);
+  color: var(--primary-color);
 }
 
 @layer base {

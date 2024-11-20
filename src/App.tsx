@@ -13,6 +13,7 @@ import { useDialogs } from "./hooks/useDialogsContext";
 import EditNodeDialog from "./dialogs/EditNodeDialog";
 import AddNodeDialog from "./dialogs/AddNodeDialog";
 import { ToastContainer } from 'react-toastify';
+import Sidebar from "./components/Sidebar";
 
 const nodeType = { customNode: CustomNode };
 const edgeType = { customEdge: CustomEdge };
@@ -62,12 +63,14 @@ export default function App() {
         </ReactFlow>
       </div>
 
-      <Toolbar />
+      {/* <Toolbar /> */}
 
       {isEditDialogOpen && <EditNodeDialog />}
       {isAddDialogOpen && <AddNodeDialog />}  
 
       <ToastContainer />
+
+      <Sidebar/>
     </div>
   );
 }
