@@ -16,7 +16,7 @@ export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY, mar
   });
 
   const customStyle = {
-    stroke: selectedEdge?.id === id ? "#00dbde" : "",
+    stroke: selectedEdge?.id === id ? "#2a363b" : "",
     strokeWidth: 1,
   }
 

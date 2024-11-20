@@ -36,6 +36,8 @@ const Sidebar = () => {
         >
           <IoIosBackspace size={24} />
         </button>
+
+        {/* Tabs in the sidebar */}
         <Tabs />
       </div>
     </div>

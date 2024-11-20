@@ -73,7 +73,7 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
           type: MarkerType.ArrowClosed,
           width: 20,
           height: 20,
-          color: "#00dbde",
+          color: "#2a363b",
         },
       };
 

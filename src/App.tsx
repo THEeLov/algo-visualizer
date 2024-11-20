@@ -28,10 +28,7 @@ export default function App() {
     onConnect,
     onNodeSelect,
     onEdgeSelect,
-    selectedNode,
   } = useGraph();
-
-  console.log(selectedNode);
 
   return (
     <div className="relative">
