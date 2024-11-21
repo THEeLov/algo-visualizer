@@ -27,7 +27,7 @@ interface GraphContextProps {
   onNodeSelect: (node: Node) => void;
   onEdgeSelect: (edge: Edge) => void;
   setSelectedNode: (node: Node | null) => void;
-  createTree: () => void;
+  validateTree: () => void;
   onNodesChange: (changes: any) => void;
   onEdgesChange: (changes: any) => void;
   onConnect: (params: Edge | Connection) => void;
@@ -173,7 +173,7 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const createTree = () => {
+  const validateTree = () => {
     setValidNodes(null);
     const tree = createBinaryTree(nodes, edges, selectedNode!);
     const validation = validateBinaryTree(tree);
@@ -219,7 +219,7 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
         onNodeSelect,
         onEdgeSelect,
         setSelectedNode,
-        createTree,
+        validateTree,
         onNodesChange,
         onEdgesChange,
         onConnect,

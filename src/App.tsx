@@ -32,8 +32,8 @@ export default function App() {
 
   return (
     <div className="relative">
-      <h1 className="absolute font-black text-5xl headline-color p-4">
-        Algo-Visualizer
+      <h1 className="absolute font-black text-3xl headline-color p-4 font-mono">
+        Algo-Visualizer 
       </h1>
       <div className="w-screen h-screen">
         <ReactFlow

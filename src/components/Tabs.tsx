@@ -29,7 +29,7 @@ const Tabs = () => {
         )}
         {activeTab === "Heap" && (
           <div>
-            <h2 className="text-lg font-bold">Linked List</h2>
+            <h2 className="text-lg font-bold font-mono">Linked List</h2>
             <p>This panel contains information about Linked List.</p>
           </div>
         )}
