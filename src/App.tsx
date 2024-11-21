@@ -28,8 +28,10 @@ export default function App() {
     onConnect,
     onNodeSelect,
     onEdgeSelect,
+    selectedNode
   } = useGraph();
 
+  console.log(selectedNode)
   return (
     <div className="relative">
       <h1 className="absolute font-black text-3xl headline-color p-4 font-mono">

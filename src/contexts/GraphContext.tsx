@@ -44,7 +44,10 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const [selectedEdge, setSelectedEdge] = useState<Edge | null>(null);
-  const [validNodes, setValidNodes] = useState<Map<string, CorrectionType> | null>(null);
+  const [validNodes, setValidNodes] = useState<Map<
+    string,
+    CorrectionType
+  > | null>(null);
 
   const onNodesChange = useCallback(
     (changes: any) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -58,7 +61,9 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const onConnect = useCallback(
     (connection: any) => {
       const sourceNodeId = connection.source;
-      const sourceNode: Node | undefined = nodes.find((node) => node.id === sourceNodeId);
+      const sourceNode: Node | undefined = nodes.find(
+        (node) => node.id === sourceNodeId
+      );
 
       if (!sourceNode || sourceNode.connectionCount >= 2) {
         // Prevent connection if the source node has already 2 connections
@@ -106,7 +111,7 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
       },
       type: "customNode",
       value: value,
-      connectionCount: 0
+      connectionCount: 0,
     }));
 
     setNodes((nds) => [...nds, ...newNodes]);
@@ -135,7 +140,24 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const deleteNodeOrEdge = () => {
     if (selectedNode !== null) {
-      setNodes((nds) => nds.filter((node) => node.id !== selectedNode.id));
+      setNodes((nds) =>
+        nds
+          .map((node) => {
+            if (
+              edges.some(
+                (edge) =>
+                  edge.target === selectedNode.id && edge.source === node.id
+              )
+            ) {
+              return {
+                ...node,
+                connectionCount: node.connectionCount - 1,
+              };
+            }
+            return node;
+          })
+          .filter((node) => node.id !== selectedNode.id)
+      );
       setEdges((eds) =>
         eds.filter(
           (edge) =>
@@ -144,7 +166,6 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
       );
       setSelectedNode(null);
     } else if (selectedEdge !== null) {
-
       setNodes((nds) =>
         nds.map((node) => {
           if (node.id === selectedEdge.source) {
@@ -179,7 +200,7 @@ export const GraphContextProvider: React.FC<{ children: React.ReactNode }> = ({
     const validation = validateBinaryTree(tree);
 
     setValidNodes(validation);
-  }
+  };
 
   const onEdgeSelect = (edge: Edge) => {
     setSelectedEdge(edge);
